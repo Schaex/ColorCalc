@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ColorCalc:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ColorCalc_jar</output-path>
+    <root id="archive" name="ColorCalc.jar">
+      <element id="module-output" name="ColorCalc" />
+    </root>
+  </artifact>
+</component>

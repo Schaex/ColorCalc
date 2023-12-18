@@ -100,13 +100,13 @@ public class UI extends ColorCalcs {
         examplePanel.add(exampleText("R, G, B ∈ [0, 255]"), new GridBagConstraints(1, 3, 1, 2, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         examplePanel.add(exampleText("R, G, B ∈ [0, 9]∪[A, F]"), new GridBagConstraints(2, 3, 1, 2, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
         exampleLine(3, false, "", "", "DEC = R * 65536 +", "H ∈ [0°, 360°)", "H ∈ [0°, 360°)", "");
-        exampleLine(4, false, "", "", "256 * G + 1 * B", "S, B, V ∈ [0%, 100%]", "S, L ∈ [0%, 100%]", "");
+        exampleLine(4, false, "", "", "256 * G + B", "S, B, V ∈ [0%, 100%]", "S, L ∈ [0%, 100%]", "");
         examplePanel.add(exampleText("C, M, Y, K ∈ [0.00, 1.00]"), new GridBagConstraints(6, 3, 1, 2, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-        exampleLine(5, true, "(255, 255, 255)", "0xFFFFFF", "16777215", "(0, 0.00, 1.00)", "(0, 0.00, 1.00)", "(0.00, 0.00, 0.00, 0.00)");
-        exampleLine(6, true, "(255, 0, 0)", "0xFF0000", "16711680", "(0, 1.00, 1.00)", "(0, 1.00, 0.50)", "(0.00, 1.00, 1.00, 0.00)");
-        exampleLine(7, true, "(0, 255, 0)", "0x00FF00", "65280", "(120, 1.00, 1.00)", "(120, 1.00, 0.50)", "(1.00, 0.00, 1.00, 0.00)");
-        exampleLine(8, true, "(0, 0, 255)", "0x0000FF", "255", "(240, 1.00, 1.00)", "(240, 1.00, 0.50)", "(1.00, 1.00, 0.00, 0.00)");
-        exampleLine(9, true, "(153, 153, 153)", "0x999999", "10066329", "(0, 0.00, 0.60)", "(0, 0.00, 0.60)", "(0.00, 0.00, 0.00, 0.40)");
+        exampleLine(5, true, "(255, 255, 255)", "0xFFFFFF", "16777215", "(0, 0, 100)", "(0, 0, 100)", "(0.00, 0.00, 0.00, 0.00)");
+        exampleLine(6, true, "(255, 0, 0)", "0xFF0000", "16711680", "(0, 100, 100)", "(0, 100, 50)", "(0.00, 1.00, 1.00, 0.00)");
+        exampleLine(7, true, "(0, 255, 0)", "0x00FF00", "65280", "(120, 100, 100)", "(120, 100, 50)", "(1.00, 0.00, 1.00, 0.00)");
+        exampleLine(8, true, "(0, 0, 255)", "0x0000FF", "255", "(240, 100, 100)", "(240, 100, 50)", "(1.00, 1.00, 0.00, 0.00)");
+        exampleLine(9, true, "(153, 153, 153)", "0x999999", "10066329", "(0, 0, 60)", "(0, 0, 60)", "(0.00, 0.00, 0.00, 0.40)");
     }
 
     static void exampleLine(int line, boolean hasColorBox, String... strings) {
