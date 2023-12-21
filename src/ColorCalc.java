@@ -2,44 +2,45 @@ import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ColorCalcs {
+public class ColorCalc {
     /**
-     * Utility Class for all calculations
-     */
+     * Utility Class for all calculations.
 
-    /**
-     * Frequently used constants
+     * Frequently used constants.
      */
     public static final String newline = System.getProperty("line.separator");
-    public static final char[] HEXchars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    public static final char[] HEXChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     public static String percentToDecimal (int percentValue) {
         float decimalValue = ((float) percentValue / 100f);
-        String nicerDecimalValue = String.valueOf(decimalValue);
+        StringBuilder nicerDecimalValue = new StringBuilder(String.valueOf(decimalValue));
 
         while (nicerDecimalValue.length() < 4) {
-            nicerDecimalValue = nicerDecimalValue + "0";
+            nicerDecimalValue.append("0");
         }
 
-        return nicerDecimalValue;
-    }
-
-    public static String normalizeDecimal (float decimal) {
-        BigDecimal intermediate = BigDecimal.valueOf((double) decimal).setScale(2, RoundingMode.HALF_UP);
-        String nicerDecimalValue = intermediate.toPlainString();
-
-        while (nicerDecimalValue.length() < 4) {
-            nicerDecimalValue = nicerDecimalValue + "0";
-        }
-
-        return nicerDecimalValue;
+        return nicerDecimalValue.toString();
     }
 
     /**
-     * Methods that convert all inputs to a color
+     * Always returns a string representation of a decimal with 4 characters (e.g. 1.00 or 0.92).
+     */
+    public static String normalizeDecimal (float decimal) {
+        BigDecimal intermediate = BigDecimal.valueOf(decimal).setScale(2, RoundingMode.HALF_UP);
+        StringBuilder nicerDecimalValue = new StringBuilder(intermediate.toPlainString());
+
+        while (nicerDecimalValue.length() < 4) {
+            nicerDecimalValue.append("0");
+        }
+
+        return nicerDecimalValue.toString();
+    }
+
+    /**
+     * Methods that convert all inputs to a color.
      */
     public static Color RGBtupleToColor (String oldRGBtuple) {
-        String rgbTuple = oldRGBtuple.replaceAll("[()]", "").replaceAll(" ", "");
+        String rgbTuple = oldRGBtuple.replaceAll("[() ]", "");
         int comma1 = rgbTuple.indexOf(",");
         int comma2 = rgbTuple.lastIndexOf(",");
         int red = Integer.parseInt(rgbTuple.substring(0, comma1));
@@ -51,7 +52,7 @@ public class ColorCalcs {
 
     public static Color HEXtoColor (String hexVal) {
         String hex = hexVal.toUpperCase();
-        hex = hex.replaceAll("#", "").replaceAll("0X", "");
+        hex = hex.replaceAll("#|0X", "");
         if (hex.length() > 6) {
             hex = hex.substring(2, 7);
         }
@@ -66,11 +67,11 @@ public class ColorCalcs {
     }
 
     /**
-     * Utility method that converts single hexadecimal values to their respective integer values
+     * Utility method that converts single hexadecimal values to their respective integer values.
      */
     public static int HEXcharToInt (char c) {
         for (int i = 0; i <= 15; i++) {
-            if (HEXchars[i] == c) {
+            if (HEXChars[i] == c) {
                 return i;
             }
         }
@@ -101,7 +102,7 @@ public class ColorCalcs {
     }
 
     /**
-     * Source: https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB
+     * Source: <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB">Wikipedia: HSL and HSV</a>.
      */
     public static Color HSLtupleToColor (String oldHSLtuple) {
         String hslTuple = oldHSLtuple.replaceAll("[()%°]", "").replaceAll(" ", "");
@@ -140,8 +141,8 @@ public class ColorCalcs {
     }
 
     /**
-     * Utility method to take into account that the color circle repeats with a period of 360 degrees
-     * Normalizes angles to range [0, 360) (0 inclusive to 360 exclusive)
+     * Utility method to take into account that the color circle repeats with a period of 360 degrees.
+     * Normalizes angles to range [0, 360) (0 inclusive to 360 exclusive).
      */
     public static float CyclicPeriodicity (float f) {
         while (f >= 360f) {
@@ -156,7 +157,7 @@ public class ColorCalcs {
     }
 
     /**
-     * Source: https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
+     * Source: <a href="https://www.rapidtables.com/convert/color/cmyk-to-rgb.html">rapidtables</a>.
      */
     public static Color CMYKtupleToColor (String oldCMYKtuple) {
         String cmykTuple = oldCMYKtuple.replaceAll("[()%]", "").replaceAll(" ", "");
@@ -177,11 +178,11 @@ public class ColorCalcs {
     }
 
     /**
-     * Methods that convert a color into any color representation
+     * Methods that convert a color into any color representation.
      */
     public static String ColorToRGB (Color color) {
-        return new StringBuilder().append("In RGB:     [red = ").append(color.getRed()).append(", green = ").append(color.getGreen()).append(", blue = ").append(color.getBlue()).append("] ")
-                .append(" (").append(color.getRed()).append(", ").append(color.getGreen()).append(", ").append(color.getBlue()).append(")").append(newline).toString();
+        return "In RGB:     [red = " + color.getRed() + ", green = " + color.getGreen() + ", blue = " + color.getBlue() + "] " +
+                " (" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")" + newline;
     }
 
     public static String ColorToHEX (Color color) {
@@ -213,13 +214,13 @@ public class ColorCalcs {
         hsbvals[1] = Math.round(prehsbvals[1] * 100f);
         hsbvals[2] = Math.round(prehsbvals[2] * 100f);
 
-        return new StringBuilder().append("In HSB/HSV: [hue = ").append(hsbvals[0]).append(", saturation = ").append(hsbvals[1]).append("%, brightness = ").append(hsbvals[2]).append("%] ")
-                .append(" (").append(hsbvals[0]).append(", ").append(hsbvals[1]).append("%, ").append(hsbvals[2]).append("%) ")
-                .append(" (").append(hsbvals[0]).append(", ").append(percentToDecimal(hsbvals[1])).append(", ").append(percentToDecimal(hsbvals[2])).append(")").append(newline).toString();
+        return "In HSB/HSV: [hue = " + hsbvals[0] + ", saturation = " + hsbvals[1] + "%, brightness = " + hsbvals[2] + "%] " +
+                " (" + hsbvals[0] + ", " + hsbvals[1] + "%, " + hsbvals[2] + "%) " +
+                " (" + hsbvals[0] + ", " + percentToDecimal(hsbvals[1]) + ", " + percentToDecimal(hsbvals[2]) + ")" + newline;
     }
 
     /**
-     * Source: https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_HSL
+     * Source: <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_HSL">Wikipedia: HSL_and_HSV</a>.
      */
     public static String ColorToHSL (Color color) {
         float[] prehsbvals = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
@@ -232,13 +233,13 @@ public class ColorCalcs {
         hslvals[1] = Math.round(prehslvals[1] * 100f);
         hslvals[2] = Math.round(prehslvals[2] * 100f);
 
-        return new StringBuilder().append("In HSL:     [hue = ").append(hslvals[0]).append(", saturation = ").append(hslvals[1]).append("%, lightness = ").append(hslvals[2]).append("%] ")
-                .append(" (").append(hslvals[0]).append(", ").append(hslvals[1]).append("%, ").append(hslvals[2]).append("%) ")
-                .append(" (").append(hslvals[0]).append(", ").append(percentToDecimal(hslvals[1])).append(", ").append(percentToDecimal(hslvals[2])).append(")").append(newline).toString();
+        return "In HSL:     [hue = " + hslvals[0] + ", saturation = " + hslvals[1] + "%, lightness = " + hslvals[2] + "%] " +
+                " (" + hslvals[0] + ", " + hslvals[1] + "%, " + hslvals[2] + "%) " +
+                " (" + hslvals[0] + ", " + percentToDecimal(hslvals[1]) + ", " + percentToDecimal(hslvals[2]) + ")" + newline;
     }
 
     /**
-     * Utility method that calculates "Saturation" for HSL color space from HSB/HSV color space
+     * Utility method that calculates "Saturation" for HSL color space from HSB/HSV color space.
      */
     public static float SInHSBtoHSL (float b, float l) {
         float s = 0f;
@@ -252,7 +253,7 @@ public class ColorCalcs {
     }
 
     /**
-     * Source: https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
+     * Source: <a href="https://www.rapidtables.com/convert/color/rgb-to-cmyk.html">rapidtables</a>.
      */
     public static String ColorToCMYK (Color color) {
         float redPrime = ((float) color.getRed()) / 255f;
@@ -271,8 +272,8 @@ public class ColorCalcs {
             yellow = (1f - bluePrime - blackKey) / (1f - blackKey);
         }
 
-        return new StringBuilder().append("In CMYK:    [cyan = ").append(normalizeDecimal(cyan)).append(", magenta = ").append(normalizeDecimal(magenta)).append(", yellow = ").append(normalizeDecimal(yellow)).append(", black key = ").append(normalizeDecimal(blackKey)).append("] ")
-                .append(" (").append(normalizeDecimal(cyan)).append(", ").append(normalizeDecimal(magenta)).append(", ").append(normalizeDecimal(yellow)).append(", ").append(normalizeDecimal(blackKey)).append(") ")
-                .append(" (").append(Math.round(cyan * 100f)).append("%, ").append(Math.round(magenta * 100f)).append("%, ").append(Math.round(yellow * 100f)).append("%, ").append(Math.round(blackKey * 100f)).append("%)").toString();
+        return "In CMYK:    [cyan = " + normalizeDecimal(cyan) + ", magenta = " + normalizeDecimal(magenta) + ", yellow = " + normalizeDecimal(yellow) + ", black key = " + normalizeDecimal(blackKey) + "] " +
+                " (" + normalizeDecimal(cyan) + ", " + normalizeDecimal(magenta) + ", " + normalizeDecimal(yellow) + ", " + normalizeDecimal(blackKey) + ") " +
+                " (" + Math.round(cyan * 100f) + "%, " + Math.round(magenta * 100f) + "%, " + Math.round(yellow * 100f) + "%, " + Math.round(blackKey * 100f) + "%)";
     }
 }
