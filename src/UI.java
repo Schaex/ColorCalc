@@ -110,7 +110,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Color color = ColorCalc.RGBtupleToColor(inputField.getText());
+                    final Color color = ColorCalc.rgbTupleToColor(inputField.getText());
                     createOutput(color);
                 } catch (Exception ex) {
                     setError();
@@ -121,7 +121,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Color color = ColorCalc.HEXtoColor(inputField.getText());
+                    final Color color = ColorCalc.hexTocolor(inputField.getText());
                     createOutput(color);
                 } catch (Exception ex) {
                     setError();
@@ -132,7 +132,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Color color = ColorCalc.DECtoColor(inputField.getText());
+                    final Color color = ColorCalc.decToColor(inputField.getText());
                     createOutput(color);
                 } catch (Exception ex) {
                     setError();
@@ -143,7 +143,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Color color = ColorCalc.HSBHSVtupleToColor(inputField.getText());
+                    final Color color = ColorCalc.hsbhsvTupleToColor(inputField.getText());
                     createOutput(color);
                 } catch (Exception ex) {
                     setError();
@@ -154,7 +154,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Color color = ColorCalc.HSLtupleToColor(inputField.getText());
+                    final Color color = ColorCalc.hslTupleToColor(inputField.getText());
                     createOutput(color);
                 } catch (Exception ex) {
                     setError();
@@ -165,7 +165,7 @@ public class UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    final Color color = ColorCalc.CMYKtupleToColor(inputField.getText());
+                    final Color color = ColorCalc.cmykTupleToColor(inputField.getText());
                     createOutput(color);
                 } catch (Exception ex) {
                     setError();
@@ -209,7 +209,7 @@ public class UI extends JFrame {
      */
     private void exampleLine(JPanel panel, int line, boolean hasColorBox, String... strings) {
         if (hasColorBox) {
-            panel.add(makeColorBox(ColorCalc.RGBtupleToColor(strings[0])), new GridBagConstraints(0, line, 1, 1, 0, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, INSETS, 0, 0));
+            panel.add(makeColorBox(ColorCalc.rgbTupleToColor(strings[0])), new GridBagConstraints(0, line, 1, 1, 0, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, INSETS, 0, 0));
         }
 
         for (int i = 0; i < strings.length; i++) {
@@ -320,7 +320,7 @@ public class UI extends JFrame {
             color = ColorCalc.removeAlpha(color);
             replenishError();
             colorPanel.setBackground(color);
-            OutputValues(color);
+            outputValues(color);
         } else {
             setError();
         }
@@ -330,14 +330,14 @@ public class UI extends JFrame {
     /**
      * Writes to the output panel.
      */
-    private void OutputValues(Color color) {
+    private void outputValues(Color color) {
         final String[][] output = {
-                ColorCalc.ColorToRGB(color),
-                ColorCalc.ColorToHEX(color),
-                ColorCalc.ColorToDEC(color),
-                ColorCalc.ColorToHSBHSV(color),
-                ColorCalc.ColorToHSL(color),
-                ColorCalc.ColorToCMYK(color)
+                ColorCalc.colorToRGB(color),
+                ColorCalc.colorToHEX(color),
+                ColorCalc.colorToDEC(color),
+                ColorCalc.colorToHSBHSV(color),
+                ColorCalc.colorToHSL(color),
+                ColorCalc.colorToCMYK(color)
         };
 
         for (int i = 0; i < output.length; i++) {

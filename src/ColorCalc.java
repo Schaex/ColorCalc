@@ -23,7 +23,7 @@ public final class ColorCalc {
     /**
      * Methods that convert all inputs to a color.
      */
-    public static Color RGBtupleToColor(String tupleString) {
+    public static Color rgbTupleToColor(String tupleString) {
         final String[] tuple = tupleString.replaceAll("[() ]", "").split(",");
 
         final int r = Integer.parseInt(tuple[0]);
@@ -33,24 +33,24 @@ public final class ColorCalc {
         return new Color(r, g, b);
     }
 
-    public static Color HEXtoColor(String hexVal) {
+    public static Color hexTocolor(String hexVal) {
         hexVal = hexVal.replaceAll("#|0X|0x| ", "");
         final int rgb = Integer.parseUnsignedInt(hexVal, 16);
 
         return new Color(rgb);
     }
 
-    public static Color DECtoColor(String decString) {
+    public static Color decToColor(String decString) {
         decString = decString.replaceAll("[^0-9]", "");
         final int rgb = Integer.parseInt(decString);
 
         return new Color(rgb);
     }
 
-    public static Color HSBHSVtupleToColor(String tupleString) {
+    public static Color hsbhsvTupleToColor(String tupleString) {
         final String[] tuple = tupleString.replaceAll("[()%° ]", "").split(",");
 
-        final float hue = CyclicPeriodicity(Integer.parseInt(tuple[0])) / 360f;
+        final float hue = cyclicPeriodicity(Integer.parseInt(tuple[0])) / 360f;
         final float sat = Float.parseFloat(tuple[1]) / 100f;
         final float brt = Float.parseFloat(tuple[2]) / 100f;
 
@@ -60,10 +60,10 @@ public final class ColorCalc {
     /**
      * Source: <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB">Wikipedia: HSL and HSV</a>.
      */
-    public static Color HSLtupleToColor(String tupleString) {
+    public static Color hslTupleToColor(String tupleString) {
         final String[] tuple = tupleString.replaceAll("[()%° ]", "").split(",");
 
-        final int hue = CyclicPeriodicity(Integer.parseInt(tuple[0]));
+        final int hue = cyclicPeriodicity(Integer.parseInt(tuple[0]));
         final float huePrime = hue / 60f;
         final float sat = Float.parseFloat(tuple[1]) / 100f;
         final float lgt = Float.parseFloat(tuple[2]) / 100f;
@@ -92,7 +92,7 @@ public final class ColorCalc {
      * Utility method to take into account that the color circle repeats with a period of 360 degrees.
      * Normalizes angles to range [0, 360) (0 inclusive to 360 exclusive).
      */
-    private static int CyclicPeriodicity(int hue) {
+    private static int cyclicPeriodicity(int hue) {
         hue %= 360;
 
         return hue >= 0 ? hue : hue + 360;
@@ -101,7 +101,7 @@ public final class ColorCalc {
     /**
      * Source: <a href="https://www.rapidtables.com/convert/color/cmyk-to-rgb.html">rapidtables</a>.
      */
-    public static Color CMYKtupleToColor(String tupleString) {
+    public static Color cmykTupleToColor(String tupleString) {
         final String[] tuple = tupleString.replaceAll("[()% ]", "").split(",");
         final float c = Float.parseFloat(tuple[0]);
         final float m = Float.parseFloat(tuple[1]);
@@ -125,14 +125,14 @@ public final class ColorCalc {
     }
 
 
-    public static String[] ColorToRGB(Color color) {
+    public static String[] colorToRGB(Color color) {
         return new String[]{
                 "[red = " + color.getRed() + ", green = " + color.getGreen() + ", blue = " + color.getBlue() + "]",
                 "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")"
         };
     }
 
-    public static String[] ColorToHEX(Color color) {
+    public static String[] colorToHEX(Color color) {
         String red = Integer.toHexString(color.getRed()).toUpperCase();
         if (red.length() < 2) {
             red = "0" + red;
@@ -157,13 +157,13 @@ public final class ColorCalc {
         };
     }
 
-    public static String[] ColorToDEC(Color color) {
+    public static String[] colorToDEC(Color color) {
         final int dec = color.getRGB() & 0x00FFFFFF;
 
         return new String[]{Integer.toString(dec)};
     }
 
-    public static String[] ColorToHSBHSV(Color color) {
+    public static String[] colorToHSBHSV(Color color) {
         final float[] normalizedVals = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
         final int[] hsbVals = new int[3];
         hsbVals[0] = Math.round(normalizedVals[0] * 360f);
@@ -180,7 +180,7 @@ public final class ColorCalc {
     /**
      * Source: <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_HSL">Wikipedia: HSL_and_HSV</a>.
      */
-    public static String[] ColorToHSL(Color color) {
+    public static String[] colorToHSL(Color color) {
         final float[] normalizedVals = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
         final float[] auxValues = new float[3];
         auxValues[0] = normalizedVals[0];
@@ -212,7 +212,7 @@ public final class ColorCalc {
     /**
      * Source: <a href="https://www.rapidtables.com/convert/color/rgb-to-cmyk.html">rapidtables</a>.
      */
-    public static String[] ColorToCMYK(Color color) {
+    public static String[] colorToCMYK(Color color) {
         final float redPrime = ((float) color.getRed()) / 255f;
         final float greenPrime = ((float) color.getGreen()) / 255f;
         final float bluePrime = ((float) color.getBlue()) / 255f;
