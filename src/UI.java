@@ -301,7 +301,7 @@ public class UI extends JFrame {
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon_transparency.png")));
 
         setLayout(new GridBagLayout());
 
